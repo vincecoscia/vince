@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 export default function Hero() {
   return (
-    <section className="mb-24">
+    <section className="mb-36 mt-12">
       <h1 className="text-4xl md:text-6xl font-bold mb-6">
         <span className="text-purple-600">{'{'}</span> Vince Coscia <span className="text-purple-600">{'}'}</span>
       </h1>
