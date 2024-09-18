@@ -1,13 +1,62 @@
 import React from 'react'
 import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { SiReact, SiNextdotjs, SiTailwindcss, SiTypescript, SiNodedotjs, SiExpress, SiMongodb, SiFirebase, SiPython, SiDjango, SiPostgresql } from "react-icons/si"
+import { IconType } from "react-icons"
+
+const techIcons: { [key: string]: IconType } = {
+  'React': SiReact,
+  'Next.js': SiNextdotjs,
+  'Tailwind': SiTailwindcss,
+  'TypeScript': SiTypescript,
+  'Node.js': SiNodedotjs,
+  'Express': SiExpress,
+  'MongoDB': SiMongodb,
+  'Firebase': SiFirebase,
+  'Python': SiPython,
+  'Django': SiDjango,
+  'PostgreSQL': SiPostgresql
+}
+
+const techColors = {
+  'React': 'bg-blue-400',
+  'Next.js': 'bg-black',
+  'Tailwind': 'bg-cyan-500',
+  'TypeScript': 'bg-blue-700',
+  'Node.js': 'bg-green-600',
+  'Express': 'bg-gray-600',
+  'MongoDB': 'bg-green-500',
+  'Firebase': 'bg-yellow-500',
+  'Python': 'bg-blue-500',
+  'Django': 'bg-green-800',
+  'PostgreSQL': 'bg-blue-600'
+}
+
+type TechName = keyof typeof techIcons;
 
 const projects = [
-  { title: 'Project 1', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-  { title: 'Project 2', description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-  { title: 'Project 3', description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.' },
-  { title: 'Project 4', description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.' },
-]
-
+  { 
+    title: 'E-commerce Platform', 
+    description: 'A full-stack e-commerce solution with advanced features.',
+    technologies: ['React', 'Next.js', 'Node.js', 'MongoDB']
+  },
+  { 
+    title: 'Task Management App', 
+    description: 'A comprehensive task management system with real-time updates.',
+    technologies: ['React', 'Firebase', 'Tailwind']
+  },
+  { 
+    title: 'Data Visualization Dashboard', 
+    description: 'An interactive dashboard for complex data visualization.',
+    technologies: ['React', 'D3.js', 'Express', 'PostgreSQL']
+  },
+  { 
+    title: 'AI-powered Chatbot', 
+    description: 'An intelligent chatbot leveraging natural language processing.',
+    technologies: ['Python', 'Django', 'TensorFlow', 'React']
+  },
+] as const;
+ 
 export default function Projects() {
   return (
     <section className="mb-24">
@@ -23,6 +72,21 @@ export default function Projects() {
               <CardContent className="p-6 flex flex-col flex-grow">
                 <h3 className="text-xl font-bold mb-4">{project.title}</h3>
                 <p className="mb-4 flex-grow">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech, techIndex) => {
+                    const IconComponent = techIcons[tech as TechName];
+                    return (
+                      <Badge 
+                        key={techIndex} 
+                        variant="secondary"
+                        className={`${techColors[tech as keyof typeof techColors]} text-white flex items-center gap-1`}
+                      >
+                        {IconComponent && <IconComponent size={14} />}
+                        {tech}
+                      </Badge>
+                    );
+                  })}
+                </div>
                 <a href="#" className="text-purple-600 hover:underline mt-auto">
                   View Project →
                 </a>

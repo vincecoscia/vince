@@ -17,6 +17,8 @@ export default function Navbar() {
     setTheme(theme === 'light' ? 'dark' : 'light')
   }
 
+  if (!mounted) return null
+
   return (
     <nav className="container mx-auto px-6 py-4">
       <div className="flex justify-between items-center">
@@ -69,6 +71,12 @@ export default function Navbar() {
           ))}
         </div>
       )}
+      <button
+        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+      >
+        {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+      </button>
     </nav>
   )
 }
