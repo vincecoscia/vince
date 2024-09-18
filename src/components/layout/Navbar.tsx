@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Button } from "@/components/ui/button"
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
@@ -10,6 +12,7 @@ export default function Navbar() {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [transitionTheme, setTransitionTheme] = useState(theme)
   const [overlayOpacity, setOverlayOpacity] = useState(1)
+  const router = useRouter()
 
   useEffect(() => {
     setMounted(true)
@@ -45,28 +48,56 @@ export default function Navbar() {
     }, 2000) // Total duration: animation (1000ms) + fade-out (1000ms)
   }
 
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Experience', path: '/experience' },
+    { name: 'Projects', path: '/projects' },
+    { name: 'Blog', path: '/blog' },
+    { name: 'Contact', path: '/contact' },
+  ]
+
+  const NavLink = ({ item }: { item: { name: string; path: string } }) => {
+    const isActive = router.pathname === item.path
+    return (
+      <Link 
+        href={item.path} 
+        className={`group relative overflow-hidden px-2 ${isActive ? 'text-purple-600' : ''}`}
+      >
+        <span className={`inline-block mr-2 text-purple-600 ${isActive ? 'font-bold' : ''}`}>//</span>
+        <span className={`inline-block transition-transform duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`}>
+          {item.name}
+        </span>
+      </Link>
+    )
+  }
+
   if (!mounted) return null
 
   return (
     <>
       <nav className="container mx-auto px-6 py-4 relative z-10">
         <div className="flex justify-between items-center">
-          <a href="#" className="text-xl font-bold">
+          <Link href="/" className="text-xl font-bold">
             <span className="text-purple-600">{'<'}</span>
             vincecoscia
             <span className="text-purple-600">{'/>'}</span>
-          </a>
+          </Link>
           <div className="hidden md:flex space-x-6">
-            {['Home', 'Experience', 'Projects', 'Blog', 'Contact'].map((item) => (
-              <a 
-                key={item} 
-                href="#" 
-                className="group relative overflow-hidden px-2"
-              >
-                <span className="inline-block mr-2 text-purple-600">//</span>
-                <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">{item}</span>
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isActive = router.pathname === item.path
+              return (
+                <Link 
+                  key={item.name} 
+                  href={item.path} 
+                  className={`group relative overflow-hidden px-2 ${isActive ? 'text-purple-600' : ''}`}
+                >
+                  <span className={`inline-block mr-2 text-purple-600 ${isActive ? 'font-bold' : ''}`}>//</span>
+                  <span className={`inline-block transition-transform duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`}>
+                    {item.name}
+                  </span>
+                </Link>
+              )
+            })}
           </div>
           <div className="flex items-center">
             <Button
@@ -90,15 +121,18 @@ export default function Navbar() {
         </div>
         {isMenuOpen && (
           <div className="md:hidden mt-4 space-y-2">
-            {['Home', 'Experience', 'Projects', 'Blog', 'Contact'].map((item) => (
-              <a 
-                key={item}
-                href="#" 
-                className="block hover:text-purple-600 transition-colors duration-300"
-              >
-                <span className="text-purple-600">//</span> {item}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isActive = router.pathname === item.path
+              return (
+                <Link 
+                  key={item.name}
+                  href={item.path} 
+                  className={`block hover:text-purple-600 transition-colors duration-300 ${isActive ? 'text-purple-600 font-bold' : ''}`}
+                >
+                  <span className={`text-purple-600 ${isActive ? 'font-bold' : ''}`}>//</span> {item.name}
+                </Link>
+              )
+            })}
           </div>
         )}
       </nav>

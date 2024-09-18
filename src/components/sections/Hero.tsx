@@ -14,7 +14,7 @@ export default function Hero() {
           <FaGithub size={20} className="mr-2" />
           <span>GitHub</span>
         </a>
-        <a href="linkedin.com/in/vincent-coscia-b53b42a8/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300">
+        <a href="https://linkedin.com/in/vincent-coscia-b53b42a8/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300">
           <FaLinkedin size={20} className="mr-2" />
           <span>LinkedIn</span>
         </a>
