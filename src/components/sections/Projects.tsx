@@ -17,13 +17,13 @@ export default function Projects() {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {projects.map((project, index) => (
-          <div key={index} className="group relative hover:cursor-pointer">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-            <Card className="relative">
-              <CardContent className="p-6">
+          <div key={index} className="group relative hover:cursor-pointer h-full">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+            <Card className="relative h-full flex flex-col">
+              <CardContent className="p-6 flex flex-col flex-grow">
                 <h3 className="text-xl font-bold mb-4">{project.title}</h3>
-                <p className="mb-4">{project.description}</p>
-                <a href="#" className="text-purple-600 hover:underline">
+                <p className="mb-4 flex-grow">{project.description}</p>
+                <a href="#" className="text-purple-600 hover:underline mt-auto">
                   View Project →
                 </a>
               </CardContent>

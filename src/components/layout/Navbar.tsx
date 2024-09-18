@@ -1,14 +1,21 @@
-import React, { useState } from 'react'
+/* eslint-disable react/jsx-no-comment-textnodes */
+import React, { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Moon, Sun, Menu, X } from 'lucide-react'
+import { useTheme } from 'next-themes'
 
-interface NavbarProps {
-  theme: string
-  toggleTheme: () => void
-}
-
-export default function Navbar({ theme, toggleTheme }: NavbarProps) {
+export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light')
+  }
 
   return (
     <nav className="container mx-auto px-6 py-4">
@@ -37,7 +44,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
             onClick={toggleTheme}
             className="mr-4"
           >
-            {theme === 'dark' ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
+            {mounted && (theme === 'dark' ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />)}
           </Button>
           <Button
             variant="ghost"
