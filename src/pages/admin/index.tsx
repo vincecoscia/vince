@@ -2,6 +2,8 @@ import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import DashboardTabs from '@/components/admin/DashboardTabs';
+import DashboardStats from '@/components/admin/DashboardStats';
 
 const AdminPage: NextPage = () => {
   const { data: session, status } = useSession();
@@ -22,9 +24,10 @@ const AdminPage: NextPage = () => {
 
   return (
     <div>
-      <h1>Admin Dashboard</h1>
-      <p>Welcome, {session.user?.name}!</p>
-      {/* Add your admin page content here */}
+      <h1 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6">Dashboard</h1>
+      
+      <DashboardStats />
+      <DashboardTabs />
     </div>
   );
 };

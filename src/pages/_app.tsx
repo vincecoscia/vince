@@ -3,7 +3,7 @@ import { ThemeProvider } from 'next-themes'
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
-import Layout from '../components/layout/Layout'
+import ConditionalLayout from '../components/layout/ConditionalLayout'
 import '../styles/globals.css'
 
 import { api } from "@/utils/api";
@@ -14,11 +14,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-    <ThemeProvider attribute="class" defaultTheme="dark">
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
+      <ThemeProvider attribute="class" defaultTheme="dark">
+        <ConditionalLayout>
+          <Component {...pageProps} />
+        </ConditionalLayout>
+      </ThemeProvider>
     </SessionProvider>
   )
 }

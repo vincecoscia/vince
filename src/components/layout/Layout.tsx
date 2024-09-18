@@ -21,20 +21,20 @@ export default function Layout({ children }: LayoutProps) {
     setTheme(theme === 'light' ? 'dark' : 'light')
   }
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (backgroundRef.current) {
-      const rect = backgroundRef.current.getBoundingClientRect()
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      })
-    }
-  }
+  // const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   if (backgroundRef.current) {
+  //     const rect = backgroundRef.current.getBoundingClientRect()
+  //     setMousePosition({
+  //       x: e.clientX - rect.left,
+  //       y: e.clientY - rect.top
+  //     })
+  //   }
+  // }
 
   return (
     <div 
       className={`min-h-screen bg-background text-foreground font-mono relative`}
-      onMouseMove={handleMouseMove}
+      // onMouseMove={handleMouseMove}
     >
       <DynamicBackground />
 
