@@ -16,7 +16,9 @@ const techColors = {
   'PHP': 'bg-purple-600',
   'Laravel': 'bg-red-600',
   'JavaScript': 'bg-yellow-400',
-  'Wordpress': 'bg-blue-500'
+  'Wordpress': 'bg-blue-500',
+  'AWS': 'bg-orange-500'
+
 }
 
 const techIcons = {
@@ -32,7 +34,7 @@ const techIcons = {
   'PHP': SiPhp,
   'Laravel': SiLaravel,
   'JavaScript': SiJavascript,
-  'Wordpress': SiWordpress
+  'Wordpress': SiWordpress,
 }
 
 type TechName = keyof typeof techIcons;

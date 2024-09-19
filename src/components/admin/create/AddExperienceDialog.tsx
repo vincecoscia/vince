@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
 import { api } from "@/utils/api";
 import { Plus } from 'lucide-react';
 import { Technology } from "@prisma/client";
+
 
 interface AddExperienceDialogProps {
   technologies: Technology[];
@@ -19,8 +21,10 @@ export function AddExperienceDialog({ technologies }: AddExperienceDialogProps) 
   const [company, setCompany] = useState('');
   const [period, setPeriod] = useState('');
   const [description, setDescription] = useState('');
+  const [order, setOrder] = useState(0);
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const utils = api.useUtils();
 
   const { toast } = useToast();
   const addExperienceMutation = api.experience.create.useMutation();
@@ -31,6 +35,7 @@ export function AddExperienceDialog({ technologies }: AddExperienceDialogProps) 
     if (!company) newErrors.company = 'Company is required';
     if (!period) newErrors.period = 'Period is required';
     if (!description) newErrors.description = 'Description is required';
+    if (!order) newErrors.order = 'Order is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -45,11 +50,13 @@ export function AddExperienceDialog({ technologies }: AddExperienceDialogProps) 
           period,
           description,
           technologies: selectedTechnologies,
+          order: order,
         });
         toast({
           title: "Experience added successfully",
           description: "Your new experience has been added to your profile.",
         });
+        utils.experience.getAll.invalidate();
         setOpen(false);
         // Reset form fields
         setTitle('');
@@ -57,6 +64,7 @@ export function AddExperienceDialog({ technologies }: AddExperienceDialogProps) 
         setPeriod('');
         setDescription('');
         setSelectedTechnologies([]);
+        setOrder(0);
       } catch (error) {
         toast({
           title: "Error adding experience",
@@ -135,17 +143,25 @@ export function AddExperienceDialog({ technologies }: AddExperienceDialogProps) 
               <Label htmlFor="technologies" className="text-right">
                 Technologies
               </Label>
-              {technologies.length > 0 && (
-                <Select>
-                  {technologies.map((technology) => (
-                  <SelectItem key={technology.id} value={technology.id}>
-                    {technology.name}
-                  </SelectItem>
-                ))}
-              </Select>
-              )}
+              <div className="col-span-3">
+              <MultipleSelector
+                defaultOptions={technologies.map(tech => ({ value: tech.id, label: tech.name }))}
+                placeholder="Select technologies"
+                options={technologies.map(tech => ({ value: tech.id, label: tech.name }))}
+                onChange={(options: Option[]) => setSelectedTechnologies(options.map(option => option.value))}
+              />
               {errors.technologies && <p className="col-span-3 col-start-2 text-red-500 text-sm">{errors.technologies}</p>}
               {technologies.length === 0 && <p className="col-span-3 col-start-2 text-red-500 text-sm">No technologies found</p>}
+              </div>
+              <Label htmlFor="order" className="text-right">
+                Order
+              </Label>
+              <Input
+                id="order"
+                value={order}
+                onChange={(e) => setOrder(Number(e.target.value))}
+                className={`col-span-3 ${errors.order ? 'border-red-500' : ''}`}
+              />
             </div>
           </div>
           <div className="flex justify-end">

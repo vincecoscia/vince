@@ -1,21 +1,52 @@
-import React from 'react';
+import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus } from 'lucide-react';
-import { AddExperienceDialog } from "@/components/admin/AddExperienceDialog";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Plus, MoreVertical, Pencil, Trash } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { AddExperienceDialog } from "@/components/admin/create/AddExperienceDialog";
 import { Experience, Project, Technology, Blog } from "@prisma/client";
-import { AddTechnologyDialog } from "@/components/admin/AddTechnologyDialog";
-import * as Si from 'react-icons/si';
+import { AddTechnologyDialog } from "@/components/admin/create/AddTechnologyDialog";
+import { AddProjectDialog } from "@/components/admin/create/AddProjectDialog";
+import { UpdateExperienceDialog } from "@/components/admin/update/UpdateExperienceDialog";
+import { UpdateProjectDialog } from "@/components/admin/update/UpdateProjectDialog";
+import { UpdateTechnologyDialog } from "@/components/admin/update/UpdateTechnologyDialog";
+import * as Si from "react-icons/si";
+
+interface ExperienceWithTechnologies extends Experience {
+  technologies: Technology[];
+}
+
+interface ProjectWithTechnologies extends Project {
+  technologies: Technology[];
+}
 
 interface DashboardTabsProps {
-  experiences: Experience[];
-  projects: Project[];
+  experiences: ExperienceWithTechnologies[];
+  projects: ProjectWithTechnologies[];
   technologies: Technology[];
   blogs: Blog[];
 }
 
-const DashboardTabs: React.FC<DashboardTabsProps> = ({ experiences, projects, technologies, blogs }) => {
+const DashboardTabs: React.FC<DashboardTabsProps> = ({
+  experiences,
+  projects,
+  technologies,
+  blogs,
+}) => {
   return (
     <Tabs defaultValue="experience" className="space-y-4">
       <TabsList>
@@ -31,10 +62,61 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({ experiences, projects, te
             <CardDescription>Manage your work experience here.</CardDescription>
           </CardHeader>
           <CardContent>
-            <AddExperienceDialog 
-              technologies={technologies}
-            />
-            {/* Add a list or table of experiences here */}
+            <AddExperienceDialog technologies={technologies} />
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {experiences.map((experience) => (
+                <Card
+                  key={experience.id}
+                  className="flex flex-col items-start rounded-md border p-4"
+                >
+                  <CardHeader className="w-full">
+                    <div className="flex justify-between items-center w-full">
+                      <CardTitle>{experience.title}</CardTitle>
+                      <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <UpdateExperienceDialog
+                            experience={experience}
+                            technologies={technologies}
+                            onUpdate={() => {/* Refresh data if needed */}}
+                          >
+                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                              <Pencil className="mr-2 h-4 w-4" />
+                              <span>Edit</span>
+                            </DropdownMenuItem>
+                          </UpdateExperienceDialog>
+                          <DropdownMenuItem>
+                            <Trash className="mr-2 h-4 w-4" />
+                            <span>Delete</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm">{experience.company}</p>
+                    <p className="text-sm">{experience.period}</p>
+                    <p className="text-sm">{experience.description}</p>
+                  </CardContent>
+                  <CardFooter>
+                    <div className="flex flex-wrap gap-2">
+                      {experience.technologies.map((technology) => (
+                        <Badge
+                          key={technology.id}
+                          className={`rounded-md px-2 py-1 text-sm text-white bg-${technology.color}`}
+                        >
+                          {technology.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -42,14 +124,64 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({ experiences, projects, te
         <Card>
           <CardHeader>
             <CardTitle>Projects</CardTitle>
-            <CardDescription>Manage your portfolio projects here.</CardDescription>
+            <CardDescription>
+              Manage your portfolio projects here.
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="mb-4">
-              <Plus className="h-4 w-4 mr-2" />
-              Add New Project
-            </Button>
-            {/* Add a list or grid of projects here */}
+            <AddProjectDialog technologies={technologies} />
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {projects.map((project) => (
+                <Card
+                  key={project.id}
+                  className="flex flex-col items-start rounded-md border p-4"
+                >
+                  <CardHeader className="w-full">
+                    <div className="flex justify-between items-center w-full">
+                      <CardTitle>{project.title}</CardTitle>
+                      <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <UpdateProjectDialog
+                            project={project}
+                            technologies={technologies}
+                            onUpdate={() => {/* Refresh data if needed */}}
+                          >
+                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                              <Pencil className="mr-2 h-4 w-4" />
+                              <span>Edit</span>
+                            </DropdownMenuItem>
+                          </UpdateProjectDialog>
+                          <DropdownMenuItem>
+                            <Trash className="mr-2 h-4 w-4" />
+                            <span>Delete</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm">{project.description}</p>
+                  </CardContent>
+                  <CardFooter>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((technology) => (
+                        <Badge
+                          key={technology.id}
+                          className={`rounded-md px-2 py-1 text-sm text-white bg-${technology.color}`}
+                        >
+                          {technology.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -57,26 +189,59 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({ experiences, projects, te
         <Card>
           <CardHeader>
             <CardTitle>Technologies</CardTitle>
-            <CardDescription>Manage your technology skills here.</CardDescription>
+            <CardDescription>
+              Manage your technology skills here.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <AddTechnologyDialog />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
               {technologies.map((technology) => {
                 const IconComponent = Si[technology.icon as keyof typeof Si];
                 return (
-                  <div key={technology.id} className={`p-4 border rounded-md text-white flex items-center bg-${technology.color}`}>
-                    {IconComponent ? (
-                      <IconComponent className="h-8 w-8 mr-4" />
-                    ) : (
-                      <span className="h-8 w-8 mr-4 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
-                        ?
-                      </span>
-                    )}
-                    <div>
-                      <h3 className="text-lg font-semibold">{technology.name}</h3>
-                      <p className="text-sm text-gray-100">{technology.color}</p>
+                  <div
+                    key={technology.id}
+                    className={`flex items-center justify-between rounded-md border p-4 text-white bg-${technology.color}`}
+                  >
+                    <div className="flex items-center">
+                      {IconComponent ? (
+                        <IconComponent className="mr-4 h-8 w-8" />
+                      ) : (
+                        <span className="mr-4 flex h-8 w-8 items-center justify-center rounded-full bg-gray-300 text-gray-600">
+                          ?
+                        </span>
+                      )}
+                      <div>
+                        <h3 className="text-lg font-semibold">
+                          {technology.name}
+                        </h3>
+                        <p className="text-sm text-gray-100">
+                          {technology.color}
+                        </p>
+                      </div>
                     </div>
+                    <DropdownMenu modal={false}>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <UpdateTechnologyDialog
+                          technology={technology}
+                          onUpdate={() => {/* Refresh data if needed */}}
+                        >
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <Pencil className="mr-2 h-4 w-4" />
+                            <span>Edit</span>
+                          </DropdownMenuItem>
+                        </UpdateTechnologyDialog>
+                        <DropdownMenuItem>
+                          <Trash className="mr-2 h-4 w-4" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 );
               })}
@@ -92,7 +257,7 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({ experiences, projects, te
           </CardHeader>
           <CardContent>
             <Button className="mb-4">
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Add New Blog Post
             </Button>
             {/* Add a list of blog posts here */}

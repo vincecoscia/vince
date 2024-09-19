@@ -7,6 +7,8 @@ export const projectRouter = createTRPCRouter({
       title: z.string().min(1),
       description: z.string().min(1),
       technologies: z.array(z.string()),
+      link: z.string().optional(),
+      order: z.number().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
       return ctx.db.project.create({
@@ -17,6 +19,8 @@ export const projectRouter = createTRPCRouter({
           technologies: {
             connect: input.technologies.map(id => ({ id })),
           },
+          link: input.link,
+          order: input.order,
         },
       });
     }),
@@ -40,15 +44,19 @@ export const projectRouter = createTRPCRouter({
     title: z.string().min(1),
     description: z.string().min(1),
     technologies: z.array(z.string()),
+    link: z.string().optional(),
+    order: z.number().optional(),
   })).mutation(async ({ ctx, input }) => {
     return ctx.db.project.update({
       where: { id: input.id },
-        data: {
+      data: {
         title: input.title,
         description: input.description,
         technologies: {
-          connect: input.technologies.map(id => ({ id })),
+          set: input.technologies.map(id => ({ id })),
         },
+        link: input.link,
+        order: input.order,
       },
     });
   }),

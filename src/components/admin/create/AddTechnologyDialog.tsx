@@ -41,6 +41,7 @@ export function AddTechnologyDialog() {
       toast({
         title: "Technology added successfully",
         description: "Your new technology has been added to the list.",
+        variant: "success",
       });
       setOpen(false);
       // Reset form fields
@@ -199,37 +200,41 @@ export function AddTechnologyDialog() {
   ];
 
   const iconOptions = [
-    { name: "React", icon: Si.SiReact },
-    { name: "Angular", icon: Si.SiAngular },
-    { name: "Vue", icon: Si.SiVuedotjs },
-    { name: "JavaScript", icon: Si.SiJavascript },
-    { name: "TypeScript", icon: Si.SiTypescript },
-    { name: "Node.js", icon: Si.SiNodedotjs },
-    { name: "Python", icon: Si.SiPython },
-    { name: "NextJS", icon: Si.SiNextdotjs },
-    { name: "C#", icon: Si.SiCsharp },
-    { name: "PHP", icon: Si.SiPhp },
-    { name: "Ruby", icon: Si.SiRuby },
-    { name: "Go", icon: Si.SiGo },
-    { name: "Rust", icon: Si.SiRust },
-    { name: "Swift", icon: Si.SiSwift },
-    { name: "Kotlin", icon: Si.SiKotlin },
-    { name: "Docker", icon: Si.SiDocker },
-    { name: "Kubernetes", icon: Si.SiKubernetes },
-    { name: "AWS", icon: Si.SiAmazon },
-    { name: "Azure", icon: Si.SiMicrosoftazure },
-    { name: "Google Cloud", icon: Si.SiGooglecloud },
-    { name: "MongoDB", icon: Si.SiMongodb },
-    { name: "PostgreSQL", icon: Si.SiPostgresql },
-    { name: "MySQL", icon: Si.SiMysql },
-    { name: "Redis", icon: Si.SiRedis },
-    { name: "GraphQL", icon: Si.SiGraphql },
-    { name: "Git", icon: Si.SiGit },
-    { name: "GitHub", icon: Si.SiGithub },
-    { name: "GitLab", icon: Si.SiGitlab },
-    { name: "Webpack", icon: Si.SiWebpack },
-    { name: "Babel", icon: Si.SiBabel },
-    { name: "Tailwindcss", icon: Si.SiTailwindcss },
+    { name: "React", icon: Si.SiReact, iconName: "SiReact" },
+    { name: "Angular", icon: Si.SiAngular, iconName: "SiAngular" },
+    { name: "NextJS", icon: Si.SiNextdotjs, iconName: "SiNextdotjs" },
+    { name: "JavaScript", icon: Si.SiJavascript, iconName: "SiJavascript" },
+    { name: "TypeScript", icon: Si.SiTypescript, iconName: "SiTypescript" },
+    { name: "Node.js", icon: Si.SiNodedotjs, iconName: "SiNodedotjs" },
+    { name: "Python", icon: Si.SiPython, iconName: "SiPython" },
+    { name: "Tailwind", icon: Si.SiTailwindcss, iconName: "SiTailwindcss" },
+    { name: "MySQL", icon: Si.SiMysql, iconName: "SiMysql" },
+    { name: "AWS", icon: Si.SiAmazon, iconName: "SiAmazon" },
+    { name: "Prisma", icon: Si.SiPrisma, iconName: "SiPrisma" },
+    { name: "Vue", icon: Si.SiVuedotjs, iconName: "SiVuedotjs" },
+    { name: "C#", icon: Si.SiCsharp, iconName: "SiCsharp" },
+    { name: "PHP", icon: Si.SiPhp, iconName: "SiPhp" },
+    { name: "Express.js", icon: Si.SiExpress, iconName: "SiExpress" },
+    { name: "WordPress", icon: Si.SiWordpress, iconName: "SiWordpress" },
+    { name: "Laravel", icon: Si.SiLaravel, iconName: "SiLaravel" },
+    { name: "Ruby", icon: Si.SiRuby, iconName: "SiRuby" },
+    { name: "Go", icon: Si.SiGo, iconName: "SiGo" },
+    { name: "Rust", icon: Si.SiRust, iconName: "SiRust" },
+    { name: "Swift", icon: Si.SiSwift, iconName: "SiSwift" },
+    { name: "Kotlin", icon: Si.SiKotlin, iconName: "SiKotlin" },
+    { name: "Docker", icon: Si.SiDocker, iconName: "SiDocker" },
+    { name: "Kubernetes", icon: Si.SiKubernetes, iconName: "SiKubernetes" },
+    { name: "Azure", icon: Si.SiMicrosoftazure, iconName: "SiMicrosoftazure" },
+    { name: "Google Cloud", icon: Si.SiGooglecloud, iconName: "SiGooglecloud" },
+    { name: "MongoDB", icon: Si.SiMongodb, iconName: "SiMongodb" },
+    { name: "PostgreSQL", icon: Si.SiPostgresql, iconName: "SiPostgresql" },
+    { name: "Redis", icon: Si.SiRedis, iconName: "SiRedis" },
+    { name: "GraphQL", icon: Si.SiGraphql, iconName: "SiGraphql" },
+    { name: "Git", icon: Si.SiGit, iconName: "SiGit" },
+    { name: "GitHub", icon: Si.SiGithub, iconName: "SiGithub" },
+    { name: "GitLab", icon: Si.SiGitlab, iconName: "SiGitlab" },
+    { name: "Webpack", icon: Si.SiWebpack, iconName: "SiWebpack" },
+    { name: "Babel", icon: Si.SiBabel, iconName: "SiBabel" },
   ];
 
   const validateForm = () => {
@@ -358,7 +363,7 @@ export function AddTechnologyDialog() {
                 </SelectTrigger>
                 <SelectContent>
                   {iconOptions.map((option) => (
-                    <SelectItem key={option.name} value={`Si${option.name}`}>
+                    <SelectItem key={option.name} value={option.iconName}>
                       <div className="flex items-center">
                         <option.icon className="mr-2 h-4 w-4" />
                         {option.name}

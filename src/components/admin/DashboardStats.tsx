@@ -10,6 +10,16 @@ interface DashboardStatsProps {
   blogs: Blog[];
 }
 const DashboardStats: React.FC<DashboardStatsProps> = ({ experiences, projects, technologies, blogs }) => {
+  const currentYear = new Date().getFullYear();
+  const experiencesCount = experiences.filter(experience => new Date(experience.period).getFullYear() === currentYear).length;
+  const projectsCount = projects.filter(project => new Date(project.createdAt).getFullYear() === currentYear).length;
+  const technologiesCount = technologies.filter(technology => new Date(technology.createdAt).getFullYear() === currentYear).length;
+  const blogsCount = blogs.filter(blog => new Date(blog.createdAt).getFullYear() === currentYear).length;
+  const totalExperience = experiences.length;
+  const totalProjects = projects.length;
+  const totalTechnologies = technologies.length;
+  const totalBlogs = blogs.length;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
       <Card>
@@ -18,8 +28,8 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ experiences, projects, 
           <Briefcase className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">5 years</div>
-          <p className="text-xs text-muted-foreground">+1 year from last month</p>
+          <div className="text-2xl font-bold">{totalExperience}</div>
+          {/* <p className="text-xs text-muted-foreground">+1 year from last month</p> */}
         </CardContent>
       </Card>
       <Card>
@@ -28,8 +38,8 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ experiences, projects, 
           <Code2 className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">15</div>
-          <p className="text-xs text-muted-foreground">+2 new this month</p>
+          <div className="text-2xl font-bold">{totalProjects}</div>
+          {/* <p className="text-xs text-muted-foreground">+2 new this month</p> */}
         </CardContent>
       </Card>
       <Card>
@@ -38,8 +48,8 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ experiences, projects, 
           <CalendarDays className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">24</div>
-          <p className="text-xs text-muted-foreground">+4 new this quarter</p>
+          <div className="text-2xl font-bold">{totalTechnologies}</div>
+          <p className="text-xs text-muted-foreground">+1 new this month</p>
         </CardContent>
       </Card>
       <Card>
@@ -48,7 +58,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ experiences, projects, 
           <FileText className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">32</div>
+          <div className="text-2xl font-bold">{totalBlogs}</div>
           <p className="text-xs text-muted-foreground">+7 this month</p>
         </CardContent>
       </Card>

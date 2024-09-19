@@ -78,7 +78,8 @@ model Experience {
   title     String
   company   String
   period    String
-  description String
+  order     Int @default(0) @unique
+  description String? @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -104,9 +105,13 @@ model Technology {
 model Project {
   id        String      @id @default(cuid())
   title     String
-  description String
+  description String? @db.Text
+  link        String?
+  githubLink  String?
+  private     Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  order     Int @default(0) @unique
 
   createdBy   User   @relation(fields: [createdById], references: [id])
   createdById String

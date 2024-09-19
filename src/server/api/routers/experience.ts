@@ -9,6 +9,7 @@ export const experienceRouter = createTRPCRouter({
       period: z.string().min(1),
       description: z.string().min(1),
       technologies: z.array(z.string()).optional(),
+      order: z.number().min(0),
     }))
     .mutation(async ({ ctx, input }) => {
       return ctx.db.experience.create({
@@ -21,21 +22,24 @@ export const experienceRouter = createTRPCRouter({
           technologies: input.technologies ? {
             connect: input.technologies.map(id => ({ id })),
           } : undefined,
+          order: input.order,
         },
       });
     }),
 
   getAll: publicProcedure.query(async ({ ctx }) => {
-    return ctx.db.experience.findMany({
+    const experiences = await ctx.db.experience.findMany({
       include: { technologies: true },
-      orderBy: { createdAt: "desc" },
+      orderBy: { order: "asc" },
     });
+    return experiences;
   }),
 
   getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
     return ctx.db.experience.findUnique({
       where: { id: input },
       include: { technologies: true },
+      
     });
   }),
 
@@ -46,6 +50,7 @@ export const experienceRouter = createTRPCRouter({
     period: z.string().min(1),
     description: z.string().min(1),
     technologies: z.array(z.string()),
+    order: z.number().min(0),
   })).mutation(async ({ ctx, input }) => {
     return ctx.db.experience.update({
       where: { id: input.id },
@@ -55,8 +60,9 @@ export const experienceRouter = createTRPCRouter({
         period: input.period,
         description: input.description,
         technologies: {
-          connect: input.technologies.map(id => ({ id })),
-        },  
+          set: input.technologies.map(id => ({ id })),
+        },
+        order: input.order,
       },
     });
   }),
