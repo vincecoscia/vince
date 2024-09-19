@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
 import { api } from "@/utils/api";
@@ -19,6 +20,8 @@ export function AddProjectDialog({ technologies }: AddProjectDialogProps) {
   const [description, setDescription] = useState('');
   const [link, setLink] = useState('');
   const [order, setOrder] = useState(0);
+  const [live, setLive] = useState(false);
+  const [githubLink, setGithubLink] = useState('');
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const utils = api.useUtils();
@@ -45,6 +48,8 @@ export function AddProjectDialog({ technologies }: AddProjectDialogProps) {
           technologies: selectedTechnologies,
           link,
           order,
+          live,
+          githubLink,
         });
         toast({
           title: "Project added successfully",
@@ -58,6 +63,8 @@ export function AddProjectDialog({ technologies }: AddProjectDialogProps) {
         setLink('');
         setSelectedTechnologies([]);
         setOrder(0);
+        setLive(false);
+        setGithubLink('');
       } catch (error) {
         toast({
           title: "Error adding project",
@@ -117,6 +124,28 @@ export function AddProjectDialog({ technologies }: AddProjectDialogProps) {
                 onChange={(e) => setLink(e.target.value)}
                 className="col-span-3"
                 placeholder="https://example.com"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="live" className="text-right">
+                Live
+              </Label>
+              <Switch
+                id="live"
+                checked={live}
+                onCheckedChange={setLive}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="githubLink" className="text-right">
+                GitHub Link
+              </Label>
+              <Input
+                id="githubLink"
+                value={githubLink}
+                onChange={(e) => setGithubLink(e.target.value)}
+                className="col-span-3"
+                placeholder="https://github.com/example"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">

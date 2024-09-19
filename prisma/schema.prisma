@@ -109,6 +109,7 @@ model Project {
   link        String?
   githubLink  String?
   private     Boolean @default(false)
+  live        Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   order     Int @default(0) @unique
@@ -122,6 +123,7 @@ model Blog {
   id        String      @id @default(cuid())
   title     String
   content   String @db.Text
+  live      Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

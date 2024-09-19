@@ -235,6 +235,7 @@ export function AddTechnologyDialog() {
     { name: "GitLab", icon: Si.SiGitlab, iconName: "SiGitlab" },
     { name: "Webpack", icon: Si.SiWebpack, iconName: "SiWebpack" },
     { name: "Babel", icon: Si.SiBabel, iconName: "SiBabel" },
+    { name: "Electron", icon: Si.SiElectron, iconName: "SiElectron" },
   ];
 
   const validateForm = () => {

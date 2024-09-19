@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
 import { api } from "@/utils/api";
@@ -22,6 +23,8 @@ export function UpdateProjectDialog({ project, technologies, onUpdate, children 
   const [description, setDescription] = useState(project.description || '');
   const [link, setLink] = useState(project.link || '');
   const [order, setOrder] = useState(project.order || 0);
+  const [live, setLive] = useState(project.live || false);
+  const [githubLink, setGithubLink] = useState(project.githubLink || '');
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
     project.technologies.map(tech => tech.id)
   );
@@ -38,6 +41,8 @@ export function UpdateProjectDialog({ project, technologies, onUpdate, children 
       setLink(project.link || '');
       setOrder(project.order || 0);
       setSelectedTechnologies(project.technologies.map(tech => tech.id));
+      setLive(project.live || false);
+      setGithubLink(project.githubLink || '');
     }
   }, [open, project]);
 
@@ -61,6 +66,8 @@ export function UpdateProjectDialog({ project, technologies, onUpdate, children 
           technologies: selectedTechnologies,
           link,
           order,
+          live,
+          githubLink,
         });
         toast({
           title: "Project updated successfully",
@@ -125,6 +132,28 @@ export function UpdateProjectDialog({ project, technologies, onUpdate, children 
                 onChange={(e) => setLink(e.target.value)}
                 className="col-span-3"
                 placeholder="https://example.com"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="live" className="text-right">
+                Live
+              </Label>
+              <Switch
+                id="live"
+                checked={live}
+                onCheckedChange={setLive}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="githubLink" className="text-right">
+                GitHub Link
+              </Label>
+              <Input
+                id="githubLink"
+                value={githubLink}
+                onChange={(e) => setGithubLink(e.target.value)}
+                className="col-span-3"
+                placeholder="https://github.com/example"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">

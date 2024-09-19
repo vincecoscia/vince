@@ -87,9 +87,7 @@ export function UpdateExperienceDialog({ experience, technologies, onUpdate, chi
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <Pencil className="h-4 w-4" />
-        </Button>
+        {children}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -181,7 +179,6 @@ export function UpdateExperienceDialog({ experience, technologies, onUpdate, chi
           </div>
         </form>
       </DialogContent>
-      {children} // Add this line
     </Dialog>
   );
 }

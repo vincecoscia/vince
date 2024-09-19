@@ -9,6 +9,8 @@ export const projectRouter = createTRPCRouter({
       technologies: z.array(z.string()),
       link: z.string().optional(),
       order: z.number().optional(),
+      live: z.boolean(),
+      githubLink: z.string().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
       return ctx.db.project.create({
@@ -20,6 +22,8 @@ export const projectRouter = createTRPCRouter({
             connect: input.technologies.map(id => ({ id })),
           },
           link: input.link,
+          githubLink: input.githubLink,
+          live: input.live,
           order: input.order,
         },
       });
@@ -28,7 +32,7 @@ export const projectRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     return ctx.db.project.findMany({
       include: { technologies: true },
-      orderBy: { createdAt: "desc" },
+      orderBy: { order: "asc" },
     });
   }),
 
@@ -46,6 +50,8 @@ export const projectRouter = createTRPCRouter({
     technologies: z.array(z.string()),
     link: z.string().optional(),
     order: z.number().optional(),
+    live: z.boolean(),
+    githubLink: z.string().optional(),
   })).mutation(async ({ ctx, input }) => {
     return ctx.db.project.update({
       where: { id: input.id },
@@ -57,6 +63,8 @@ export const projectRouter = createTRPCRouter({
         },
         link: input.link,
         order: input.order,
+        live: input.live,
+        githubLink: input.githubLink,
       },
     });
   }),

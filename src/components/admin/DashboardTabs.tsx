@@ -10,7 +10,7 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { Plus, MoreVertical, Pencil, Trash } from "lucide-react";
+import { Plus, MoreVertical, Pencil, Trash, CheckCircle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -70,7 +70,7 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({
                   className="flex flex-col items-start rounded-md border p-4"
                 >
                   <CardHeader className="w-full">
-                    <div className="flex justify-between items-center w-full">
+                    <div className="flex w-full items-center justify-between">
                       <CardTitle>{experience.title}</CardTitle>
                       <DropdownMenu modal={false}>
                         <DropdownMenuTrigger asChild>
@@ -82,9 +82,13 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({
                           <UpdateExperienceDialog
                             experience={experience}
                             technologies={technologies}
-                            onUpdate={() => {/* Refresh data if needed */}}
+                            onUpdate={() => {
+                              /* Refresh data if needed */
+                            }}
                           >
-                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <DropdownMenuItem
+                              onSelect={(e) => e.preventDefault()}
+                            >
                               <Pencil className="mr-2 h-4 w-4" />
                               <span>Edit</span>
                             </DropdownMenuItem>
@@ -137,8 +141,20 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({
                   className="flex flex-col items-start rounded-md border p-4"
                 >
                   <CardHeader className="w-full">
-                    <div className="flex justify-between items-center w-full">
-                      <CardTitle>{project.title}</CardTitle>
+                    <div className="flex w-full items-center justify-between">
+                      <CardTitle>
+                        <div className="flex items-center">
+                          <p>{project.title}</p>
+                          {project.live && (
+                            <div className="flex items-center">
+                              <CheckCircle className="ml-4 h-4 w-4 text-green-500" />
+                              <span className="ml-2 text-sm text-green-500">Live</span>
+                            </div>
+                          )}
+
+                        </div>
+                        
+                        </CardTitle>
                       <DropdownMenu modal={false}>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -149,9 +165,13 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({
                           <UpdateProjectDialog
                             project={project}
                             technologies={technologies}
-                            onUpdate={() => {/* Refresh data if needed */}}
+                            onUpdate={() => {
+                              /* Refresh data if needed */
+                            }}
                           >
-                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <DropdownMenuItem
+                              onSelect={(e) => e.preventDefault()}
+                            >
                               <Pencil className="mr-2 h-4 w-4" />
                               <span>Edit</span>
                             </DropdownMenuItem>
@@ -163,6 +183,26 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
+                    <CardDescription>
+                      {project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {project.link}
+                        </a>
+                      )}
+                      {project.githubLink && (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {project.githubLink}
+                        </a>
+                      )}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">{project.description}</p>
@@ -229,9 +269,13 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({
                       <DropdownMenuContent align="end">
                         <UpdateTechnologyDialog
                           technology={technology}
-                          onUpdate={() => {/* Refresh data if needed */}}
+                          onUpdate={() => {
+                            /* Refresh data if needed */
+                          }}
                         >
-                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                          <DropdownMenuItem
+                            onSelect={(e) => e.preventDefault()}
+                          >
                             <Pencil className="mr-2 h-4 w-4" />
                             <span>Edit</span>
                           </DropdownMenuItem>
