@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 import ConditionalLayout from '../components/layout/ConditionalLayout'
 import '../styles/globals.css'
+import { Toaster } from '@/components/ui/toaster'
 
 import { api } from "@/utils/api";
 
@@ -18,6 +19,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <ConditionalLayout>
           <Component {...pageProps} />
         </ConditionalLayout>
+        <Toaster />
       </ThemeProvider>
     </SessionProvider>
   )

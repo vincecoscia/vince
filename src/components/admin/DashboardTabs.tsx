@@ -3,8 +3,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from 'lucide-react';
+import { AddExperienceDialog } from "@/components/admin/AddExperienceDialog";
+import { Experience, Project, Technology, Blog } from "@prisma/client";
+import { AddTechnologyDialog } from "@/components/admin/AddTechnologyDialog";
+import * as Si from 'react-icons/si';
 
-const DashboardTabs: React.FC = () => {
+interface DashboardTabsProps {
+  experiences: Experience[];
+  projects: Project[];
+  technologies: Technology[];
+  blogs: Blog[];
+}
+
+const DashboardTabs: React.FC<DashboardTabsProps> = ({ experiences, projects, technologies, blogs }) => {
   return (
     <Tabs defaultValue="experience" className="space-y-4">
       <TabsList>
@@ -20,10 +31,9 @@ const DashboardTabs: React.FC = () => {
             <CardDescription>Manage your work experience here.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="mb-4">
-              <Plus className="h-4 w-4 mr-2" />
-              Add New Experience
-            </Button>
+            <AddExperienceDialog 
+              technologies={technologies}
+            />
             {/* Add a list or table of experiences here */}
           </CardContent>
         </Card>
@@ -50,11 +60,27 @@ const DashboardTabs: React.FC = () => {
             <CardDescription>Manage your technology skills here.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="mb-4">
-              <Plus className="h-4 w-4 mr-2" />
-              Add New Technology
-            </Button>
-            {/* Add a list or grid of technologies here */}
+            <AddTechnologyDialog />
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+              {technologies.map((technology) => {
+                const IconComponent = Si[technology.icon as keyof typeof Si];
+                return (
+                  <div key={technology.id} className={`p-4 border rounded-md text-white flex items-center bg-${technology.color}`}>
+                    {IconComponent ? (
+                      <IconComponent className="h-8 w-8 mr-4" />
+                    ) : (
+                      <span className="h-8 w-8 mr-4 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
+                        ?
+                      </span>
+                    )}
+                    <div>
+                      <h3 className="text-lg font-semibold">{technology.name}</h3>
+                      <p className="text-sm text-gray-100">{technology.color}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </CardContent>
         </Card>
       </TabsContent>

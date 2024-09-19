@@ -1,8 +1,15 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Briefcase, Code2, CalendarDays, FileText } from 'lucide-react';
+import { Experience, Project, Technology, Blog } from "@prisma/client";
 
-const DashboardStats: React.FC = () => {
+interface DashboardStatsProps {
+  experiences: Experience[];
+  projects: Project[];
+  technologies: Technology[];
+  blogs: Blog[];
+}
+const DashboardStats: React.FC<DashboardStatsProps> = ({ experiences, projects, technologies, blogs }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
       <Card>

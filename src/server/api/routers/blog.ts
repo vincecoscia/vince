@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 
 export const blogRouter = createTRPCRouter({
   create: protectedProcedure
@@ -17,12 +17,26 @@ export const blogRouter = createTRPCRouter({
       });
     }),
 
-  getAll: protectedProcedure.query(async ({ ctx }) => {
+  getAll: publicProcedure.query(async ({ ctx }) => {
     return ctx.db.blog.findMany({
-      where: { createdById: ctx.session.user.id },
       orderBy: { createdAt: "desc" },
     });
   }),
 
-  // Add more procedures as needed (update, delete, etc.)
+  getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return ctx.db.blog.findUnique({
+      where: { id: input },
+    });
+  }),
+
+  update: protectedProcedure.input(z.object({
+    id: z.string(),
+    title: z.string().min(1),
+    content: z.string().min(1),
+  })).mutation(async ({ ctx, input }) => {
+    return ctx.db.blog.update({
+      where: { id: input.id },
+      data: { title: input.title, content: input.content },
+    });
+  }),
 });
