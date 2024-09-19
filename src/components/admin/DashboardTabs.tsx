@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -18,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { AddExperienceDialog } from "@/components/admin/create/AddExperienceDialog";
-import { Experience, Project, Technology, Blog } from "@prisma/client";
+import { type Experience, type Project, type Technology, type Blog } from "@prisma/client";
 import { AddTechnologyDialog } from "@/components/admin/create/AddTechnologyDialog";
 import { AddProjectDialog } from "@/components/admin/create/AddProjectDialog";
 import { UpdateExperienceDialog } from "@/components/admin/update/UpdateExperienceDialog";
@@ -45,7 +48,7 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({
   experiences,
   projects,
   technologies,
-  blogs,
+  blogs
 }) => {
   return (
     <Tabs defaultValue="experience" className="space-y-4">

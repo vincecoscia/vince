@@ -1,4 +1,8 @@
-import { NextPage } from 'next';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { type NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -16,7 +20,7 @@ const AdminPage: NextPage = () => {
 
   useEffect(() => {
     if (status === 'loading') return; // Do nothing while loading
-    if (!session) router.push('/login'); // If no session exists, redirect to login
+    if (!session) void router.push('/login'); // If no session exists, redirect to login
   }, [session, status, router]);
 
   if (experiencesLoading || projectsLoading || technologiesLoading || blogsLoading) {

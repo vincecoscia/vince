@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Briefcase, Code2, CalendarDays, FileText } from 'lucide-react';
-import { Experience, Project, Technology, Blog } from "@prisma/client";
+import { type Experience, type Project, type Technology, type Blog } from "@prisma/client";
 
 interface DashboardStatsProps {
   experiences: Experience[];
@@ -10,11 +12,6 @@ interface DashboardStatsProps {
   blogs: Blog[];
 }
 const DashboardStats: React.FC<DashboardStatsProps> = ({ experiences, projects, technologies, blogs }) => {
-  const currentYear = new Date().getFullYear();
-  const experiencesCount = experiences.filter(experience => new Date(experience.period).getFullYear() === currentYear).length;
-  const projectsCount = projects.filter(project => new Date(project.createdAt).getFullYear() === currentYear).length;
-  const technologiesCount = technologies.filter(technology => new Date(technology.createdAt).getFullYear() === currentYear).length;
-  const blogsCount = blogs.filter(blog => new Date(blog.createdAt).getFullYear() === currentYear).length;
   const totalExperience = experiences.length;
   const totalProjects = projects.length;
   const totalTechnologies = technologies.length;

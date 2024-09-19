@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react'
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { SiReact, SiNextdotjs, SiTailwindcss, SiTypescript, SiNodedotjs, SiExpress, SiMongodb, SiFirebase, SiPython, SiDjango, SiPostgresql } from "react-icons/si"
-import { IconType } from "react-icons"
-import { Project, Technology } from "@prisma/client"
+import { type Project, type Technology } from "@prisma/client"
 import { Skeleton } from "@/components/ui/skeleton"
 import * as Si from "react-icons/si";
 

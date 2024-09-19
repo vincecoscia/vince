@@ -9,7 +9,7 @@ export default function Login() {
 
   useEffect(() => {
     if (session) {
-      router.push("/admin");
+      void router.push("/admin");
     }
   }, [session, router]);
 

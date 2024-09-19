@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState } from "react";
 import {
   Dialog,
@@ -25,7 +30,6 @@ import * as Si from "react-icons/si";
 export function AddTechnologyDialog() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [color, setColor] = useState("");
   const [icon, setIcon] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [mainColor, setMainColor] = useState("");

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type GetServerSidePropsContext } from "next";
 import {

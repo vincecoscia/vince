@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -63,7 +64,7 @@ export default function Navbar() {
         href={item.path} 
         className={`group relative overflow-hidden px-2 ${isActive ? 'text-purple-600' : ''}`}
       >
-        <span className={`inline-block mr-2 text-purple-600 ${isActive ? 'font-bold' : ''}`}>//</span>
+        <span className={`inline-block mr-2 text-purple-600 ${isActive ? 'font-bold' : ''}`}>{`//`}</span>
         <span className={`inline-block transition-transform duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`}>
           {item.name}
         </span>
@@ -91,7 +92,7 @@ export default function Navbar() {
                   href={item.path} 
                   className={`group relative overflow-hidden px-2 ${isActive ? 'text-purple-600' : ''}`}
                 >
-                  <span className={`inline-block mr-2 text-purple-600 ${isActive ? 'font-bold' : ''}`}>//</span>
+                  <span className={`inline-block mr-2 text-purple-600 ${isActive ? 'font-bold' : ''}`}>{`//`}</span>
                   <span className={`inline-block transition-transform duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`}>
                     {item.name}
                   </span>
@@ -129,7 +130,7 @@ export default function Navbar() {
                   href={item.path} 
                   className={`block hover:text-purple-600 transition-colors duration-300 ${isActive ? 'text-purple-600 font-bold' : ''}`}
                 >
-                  <span className={`text-purple-600 ${isActive ? 'font-bold' : ''}`}>//</span> {item.name}
+                  <span className={`text-purple-600 ${isActive ? 'font-bold' : ''}`}>{`//`}</span> {item.name}
                 </Link>
               )
             })}

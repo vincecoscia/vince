@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react'
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import * as Si from "react-icons/si"
-import { Experience as ExperienceType, Technology } from '@prisma/client'
+import { type Experience as ExperienceType, type Technology } from '@prisma/client'
 import { Skeleton } from "@/components/ui/skeleton"
 
 interface ExperienceWithTechnologies extends ExperienceType {

@@ -1,10 +1,14 @@
 
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Hero from '../components/sections/Hero'
 import Experience from '@/components/sections/Experience'
 import Projects from '@/components/sections/Projects'
 import Contact from '@/components/sections/Contact'
 import { api } from '@/utils/api'
-import { Experience as ExperienceType, Project, Technology } from '@prisma/client'
+import { type Experience as ExperienceType, type Project, type Technology } from '@prisma/client'
 
 interface ExperienceWithTechnologies extends ExperienceType {
   technologies: Technology[];

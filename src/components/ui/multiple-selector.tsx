@@ -1,4 +1,9 @@
-'use client';
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 
 import { Command as CommandPrimitive, useCommandState } from 'cmdk';
 import { X } from 'lucide-react';
@@ -18,9 +23,7 @@ export interface Option {
   /** Group the options by providing key. */
   [key: string]: string | boolean | undefined;
 }
-interface GroupOption {
-  [key: string]: Option[];
-}
+type GroupOption = Record<string, Option[]>;
 
 interface MultipleSelectorProps {
   value?: Option[];

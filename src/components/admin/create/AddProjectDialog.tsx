@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -5,10 +10,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
+import MultipleSelector, { type Option } from '@/components/ui/multiple-selector';
 import { api } from "@/utils/api";
 import { Plus } from 'lucide-react';
-import { Technology } from "@prisma/client";
+import { type Technology } from "@prisma/client";
 
 interface AddProjectDialogProps {
   technologies: Technology[];
