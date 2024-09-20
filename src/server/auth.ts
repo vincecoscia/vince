@@ -42,8 +42,9 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     signIn: async ({ user }) => {
+      console.log("user", user);
       const whitelist = env.LOGIN_WHITELIST.split(",");
-      if (whitelist.includes(user.email || "")) {
+      if (whitelist.includes(user.id || "")) {
         return true; // Allow sign in
       } else {
         return false; // Deny sign in

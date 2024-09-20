@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import DashboardTabs from '@/components/admin/DashboardTabs';
 import DashboardStats from '@/components/admin/DashboardStats';
 import { api } from '@/utils/api';
+import { signOut } from 'next-auth/react';
 
 const AdminPage: NextPage = () => {
   const { data: session, status } = useSession();
@@ -33,8 +34,10 @@ const AdminPage: NextPage = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6">Dashboard</h1>
-      
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6">Dashboard</h1>
+        <button onClick={() => void signOut()}>Sign out</button>
+      </div>
       <DashboardStats 
         experiences={experiences ?? []}
         projects={projects ?? []}
