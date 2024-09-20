@@ -8,6 +8,7 @@ import Experience from '@/components/sections/Experience'
 import Projects from '@/components/sections/Projects'
 import Contact from '@/components/sections/Contact'
 import { api } from '@/utils/api'
+import Head from 'next/head'
 import { type Experience as ExperienceType, type Project, type Technology } from '@prisma/client'
 
 interface ExperienceWithTechnologies extends ExperienceType {
@@ -24,6 +25,11 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>vincecoscia</title>
+        <meta name="description" content="Portfolio" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Hero />
       <Experience experiences={experiences as ExperienceWithTechnologies[]} isLoading={isExperiencesLoading} />
       <Projects projects={projects as ProjectWithTechnologies[]} isLoading={isProjectsLoading} />
