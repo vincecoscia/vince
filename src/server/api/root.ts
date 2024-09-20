@@ -4,6 +4,7 @@ import { experienceRouter } from "@/server/api/routers/experience";
 import { technologyRouter } from "@/server/api/routers/technology";
 import { projectRouter } from "@/server/api/routers/project";
 import { blogRouter } from "@/server/api/routers/blog";
+import { contactRouter } from "@/server/api/routers/contact";
 import { createTRPCRouter, createCallerFactory } from "@/server/api/trpc";
 
 /**
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   technology: technologyRouter,
   project: projectRouter,
   blog: blogRouter,
+  contact: contactRouter,
 });
 
 // export type definition of API

@@ -16,6 +16,8 @@ export const env = createEnv({
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
     LOGIN_WHITELIST: z.string(),
+    SENDGRID_API_KEY: z.string(),
+    SENDGRID_FROM_EMAIL: z.string(),
   },
 
   /**
@@ -39,6 +41,8 @@ export const env = createEnv({
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
     LOGIN_WHITELIST: process.env.LOGIN_WHITELIST,
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+    SENDGRID_FROM_EMAIL: process.env.SENDGRID_FROM_EMAIL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
