@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -6,6 +5,17 @@ import { Button } from "@/components/ui/button"
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import TransitionOverlay from './nav/TransitionOverlay'
+import NavLink from './nav/NavLink'
+import MobileMenu from './nav/MobileMenu'
+import ThemeToggle from './nav/ThemeToggle'
+
+const navItems = [
+  { name: 'Home', path: '/' },
+  { name: 'Experience', path: '/experience' },
+  { name: 'Projects', path: '/projects' },
+  { name: 'Blog', path: '/blog' },
+  { name: 'Contact', path: '/contact' },
+]
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -13,7 +23,6 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [transitionTheme, setTransitionTheme] = useState(theme)
-  const [overlayOpacity, setOverlayOpacity] = useState(1)
   const router = useRouter()
 
   useEffect(() => {
@@ -35,34 +44,11 @@ export default function Navbar() {
 
     setTimeout(() => {
       setTheme(newTheme)
-    }, 1000) // Change theme after expansion animation
+    }, 1000)
 
     setTimeout(() => {
       setIsTransitioning(false)
-    }, 1000) // End transition after fade-out
-  }
-
-  const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Experience', path: '/experience' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Contact', path: '/contact' },
-  ]
-
-  const NavLink = ({ item }: { item: { name: string; path: string } }) => {
-    const isActive = router.pathname === item.path
-    return (
-      <Link 
-        href={item.path} 
-        className={`group relative overflow-hidden px-2 ${isActive ? 'text-purple-600' : ''}`}
-      >
-        <span className={`inline-block mr-2 text-purple-600 ${isActive ? 'font-bold' : ''}`}>{`//`}</span>
-        <span className={`inline-block transition-transform duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`}>
-          {item.name}
-        </span>
-      </Link>
-    )
+    }, 1000)
   }
 
   if (!mounted) return null
@@ -77,32 +63,16 @@ export default function Navbar() {
             <span className="text-purple-600">{'/>'}</span>
           </Link>
           <div className="hidden md:flex space-x-6">
-            {navItems.map((item) => {
-              const isActive = router.pathname === item.path
-              return (
-                <Link 
-                  key={item.name} 
-                  href={item.path} 
-                  className={`group relative overflow-hidden px-2 ${isActive ? 'text-purple-600' : ''}`}
-                >
-                  <span className={`inline-block mr-2 text-purple-600 ${isActive ? 'font-bold' : ''}`}>{`//`}</span>
-                  <span className={`inline-block transition-transform duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`}>
-                    {item.name}
-                  </span>
-                </Link>
-              )
-            })}
+            {navItems.map((item) => (
+              <NavLink key={item.name} item={item} />
+            ))}
           </div>
           <div className="flex items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="mr-4"
-              disabled={isTransitioning}
-            >
-              {transitionTheme === 'dark' ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
-            </Button>
+            <ThemeToggle
+              theme={transitionTheme}
+              toggleTheme={toggleTheme}
+              isTransitioning={isTransitioning}
+            />
             <Button
               variant="ghost"
               size="icon"
@@ -113,23 +83,8 @@ export default function Navbar() {
             </Button>
           </div>
         </div>
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 space-y-2">
-            {navItems.map((item) => {
-              const isActive = router.pathname === item.path
-              return (
-                <Link 
-                  key={item.name}
-                  href={item.path} 
-                  className={`block hover:text-purple-600 transition-colors duration-300 ${isActive ? 'text-purple-600 font-bold' : ''}`}
-                >
-                  <span className={`text-purple-600 ${isActive ? 'font-bold' : ''}`}>{`//`}</span> {item.name}
-                </Link>
-              )
-            })}
-          </div>
-        )}
       </nav>
+      <MobileMenu isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} navItems={navItems} />
       <TransitionOverlay isTransitioning={isTransitioning} transitionTheme={transitionTheme as 'light' | 'dark'} />
     </>
   )
