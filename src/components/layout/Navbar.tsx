@@ -35,11 +35,11 @@ export default function Navbar() {
 
     setTimeout(() => {
       setTheme(newTheme)
-    }, 500) // Change theme after expansion animation
+    }, 1000) // Change theme after expansion animation
 
     setTimeout(() => {
       setIsTransitioning(false)
-    }, 1000) // End transition after fade-out
+    }, 2000) // End transition after fade-out
   }
 
   const navItems = [
