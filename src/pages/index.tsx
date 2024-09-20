@@ -20,7 +20,7 @@ interface ProjectWithTechnologies extends Project {
 }
 
 export default function Home() {
-  const { data: projects, isLoading: isProjectsLoading } = api.project.getAll.useQuery();
+  const { data: projects, isLoading: isProjectsLoading } = api.project.getTopFour.useQuery();
   const { data: experiences, isLoading: isExperiencesLoading } = api.experience.getAll.useQuery();
 
   return (

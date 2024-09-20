@@ -39,7 +39,13 @@ export const projectRouter = createTRPCRouter({
       orderBy: { order: "asc" },
     });
   }),
-
+  getTopFour: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.project.findMany({
+      take: 4,
+      include: { technologies: true },
+      orderBy: { order: "asc" },
+    });
+  }),
   getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
     return ctx.db.project.findUnique({
       where: { id: input },
