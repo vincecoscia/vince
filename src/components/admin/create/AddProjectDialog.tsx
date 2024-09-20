@@ -61,6 +61,8 @@ export function AddProjectDialog({ technologies }: AddProjectDialogProps) {
           description: "Your new project has been added to your profile.",
         });
         utils.project.getAll.invalidate();
+        utils.project.getPaginated.invalidate();
+        utils.project.getTopFour.invalidate();
         setOpen(false);
         // Reset form fields
         setTitle('');

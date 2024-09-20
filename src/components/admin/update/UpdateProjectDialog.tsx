@@ -82,6 +82,8 @@ export function UpdateProjectDialog({ project, technologies, onUpdate, children 
           description: "Your project has been updated.",
         });
         utils.project.getAll.invalidate();
+        utils.project.getPaginated.invalidate();
+        utils.project.getTopFour.invalidate();
         setOpen(false);
         onUpdate();
       } catch (error) {

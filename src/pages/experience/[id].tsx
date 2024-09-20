@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 const ExperienceDetail: NextPage = () => {
   const router = useRouter()

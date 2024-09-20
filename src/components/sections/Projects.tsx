@@ -7,7 +7,8 @@ import { type Project, type Technology } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import * as Si from "react-icons/si";
 import { motion, AnimatePresence } from "framer-motion";
-
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 interface ProjectWithTechnologies extends Project {
   technologies: Technology[];
 }
@@ -142,6 +143,14 @@ export default function Projects({
               </div>
             ))}
       </div>
+        <Link
+          href="/projects"
+          className="mt-8 flex justify-center lg:justify-start"
+        >
+          <Button
+            className="bg-purple-600 hover:bg-purple-700 text-white transition duration-300" 
+          >View All Projects</Button>
+        </Link>
       <p className="mt-4 text-right">{"}"}</p>
     </section>
   );

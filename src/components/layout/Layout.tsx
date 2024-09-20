@@ -21,26 +21,16 @@ export default function Layout({ children }: LayoutProps) {
     setTheme(theme === 'light' ? 'dark' : 'light')
   }
 
-  // const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   if (backgroundRef.current) {
-  //     const rect = backgroundRef.current.getBoundingClientRect()
-  //     setMousePosition({
-  //       x: e.clientX - rect.left,
-  //       y: e.clientY - rect.top
-  //     })
-  //   }
-  // }
-
   return (
     <div 
-      className={`min-h-screen bg-background text-foreground font-mono relative`}
+      className={`min-h-screen bg-background text-foreground font-mono relative flex flex-col`}
       // onMouseMove={handleMouseMove}
     >
       <DynamicBackground />
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col flex-grow">
         <Navbar />
-        <main className="container mx-auto px-6 py-12">
+        <main className="container mx-auto px-6 py-12 flex-grow">
           {children}
         </main>
         <Footer />

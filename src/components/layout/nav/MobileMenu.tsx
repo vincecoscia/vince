@@ -24,7 +24,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, setIsOpen, navItems }) 
             <X className="h-[1.2rem] w-[1.2rem]" />
           </Button>
         </div>
-        <div className="flex flex-col items-center justify-center flex-grow space-y-8">
+        <div className="flex flex-col ml-8 flex-grow space-y-8">
           {navItems.map((item) => {
             const isActive = router.pathname === item.path
             return (

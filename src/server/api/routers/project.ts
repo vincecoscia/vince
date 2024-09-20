@@ -84,4 +84,30 @@ export const projectRouter = createTRPCRouter({
       where: { id: input },
     });
   }),
+
+  getPaginated: publicProcedure
+    .input(z.object({
+      page: z.number().min(1).default(1),
+      pageSize: z.number().min(1).max(50).default(4),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { page, pageSize } = input;
+      const skip = (page - 1) * pageSize;
+
+      const [projects, totalCount] = await Promise.all([
+        ctx.db.project.findMany({
+          skip,
+          take: pageSize,
+          include: { technologies: true },
+          orderBy: { order: "asc" },
+        }),
+        ctx.db.project.count(),
+      ]);
+
+      return {
+        projects,
+        totalPages: Math.ceil(totalCount / pageSize),
+        currentPage: page,
+      };
+    }),
 });
