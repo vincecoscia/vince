@@ -20,7 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="description" content="Portfolio" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ThemeProvider attribute="class">
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} >
         <ConditionalLayout>
           <Component {...pageProps} />
 
