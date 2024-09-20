@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { Button } from "@/components/ui/button"
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import TransitionOverlay from './nav/TransitionOverlay'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -26,27 +27,19 @@ export default function Navbar() {
   }, [theme, mounted])
 
   const toggleTheme = () => {
-    if (isTransitioning) return; // Prevent multiple clicks during transition
+    if (isTransitioning) return;
 
     setIsTransitioning(true)
-    setOverlayOpacity(1)
     const newTheme = theme === 'light' ? 'dark' : 'light'
     setTransitionTheme(newTheme)
 
-    // Wait for animation to complete before changing theme
     setTimeout(() => {
       setTheme(newTheme)
-      // Start fading out the overlay
-      setTimeout(() => {
-        setOverlayOpacity(0)
-      }, 100) // Short delay before fade-out starts
-    }, 1000) // Match this with the animation duration
+    }, 500) // Change theme after expansion animation
 
-    // End the transition after fade-out
     setTimeout(() => {
       setIsTransitioning(false)
-      setOverlayOpacity(1) // Reset for next transition
-    }, 2000) // Total duration: animation (1000ms) + fade-out (1000ms)
+    }, 1000) // End transition after fade-out
   }
 
   const navItems = [
@@ -137,28 +130,7 @@ export default function Navbar() {
           </div>
         )}
       </nav>
-      {isTransitioning && (
-        <div 
-          className={`
-            fixed inset-0 pointer-events-none z-50
-            transition-all duration-1000 ease-in-out
-          `}
-          style={{
-            clipPath: 'circle(0% at top right)',
-            animation: 'expand 1s ease-in-out forwards',
-            opacity: overlayOpacity,
-            backgroundColor: transitionTheme === 'dark' ? 'rgb(9, 9, 11)' : 'rgb(255, 255, 255)',
-            // mixBlendMode: 'difference',
-          }}
-        />
-      )}
-      <style jsx>{`
-        @keyframes expand {
-          to {
-            clip-path: circle(150% at top right);
-          }
-        }
-      `}</style>
+      <TransitionOverlay isTransitioning={isTransitioning} transitionTheme={transitionTheme as 'light' | 'dark'} />
     </>
   )
 }
