@@ -72,3 +72,8 @@
 /* html {
   overflow-y: scroll;
 } */
+
+.container {
+  position: relative;
+  left: calc((100vw - 100%) / 2);
+}
