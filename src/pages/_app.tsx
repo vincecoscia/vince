@@ -20,9 +20,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="description" content="Portfolio" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ThemeProvider attribute="class" defaultTheme="dark">
+      <ThemeProvider attribute="class">
         <ConditionalLayout>
           <Component {...pageProps} />
+
         </ConditionalLayout>
         <Toaster />
       </ThemeProvider>

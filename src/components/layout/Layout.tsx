@@ -30,7 +30,7 @@ export default function Layout({ children }: LayoutProps) {
 
       <div className="relative z-10 flex flex-col flex-grow">
         <Navbar />
-        <main className="container mx-auto px-6 py-12 flex-grow">
+        <main className="container mx-auto px-6 py-12 flex-grow mt-16">
           {children}
         </main>
         <Footer />

@@ -24,9 +24,15 @@ export default function Navbar() {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [transitionTheme, setTransitionTheme] = useState(theme)
   const router = useRouter()
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
@@ -55,32 +61,34 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="container mx-auto px-6 py-4 relative z-10">
-        <div className="flex justify-between items-center">
-          <Link href="/" className="text-xl font-bold">
-            <span className="text-purple-600">{'<'}</span>
-            vincecoscia
-            <span className="text-purple-600">{'/>'}</span>
-          </Link>
-          <div className="hidden md:flex space-x-6">
-            {navItems.map((item) => (
-              <NavLink key={item.name} item={item} />
-            ))}
-          </div>
-          <div className="flex items-center">
-            <ThemeToggle
-              theme={transitionTheme}
-              toggleTheme={toggleTheme}
-              isTransitioning={isTransitioning}
-            />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden"
-            >
-              {isMenuOpen ? <X className="h-[1.2rem] w-[1.2rem]" /> : <Menu className="h-[1.2rem] w-[1.2rem]" />}
-            </Button>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md shadow-md' : ''}`}>
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex justify-between items-center">
+            <Link href="/" className="text-xl font-bold">
+              <span className="text-purple-600">{'<'}</span>
+              vincecoscia
+              <span className="text-purple-600">{'/>'}</span>
+            </Link>
+            <div className="hidden md:flex space-x-6">
+              {navItems.map((item) => (
+                <NavLink key={item.name} item={item} />
+              ))}
+            </div>
+            <div className="flex items-center">
+              <ThemeToggle
+                theme={transitionTheme}
+                toggleTheme={toggleTheme}
+                isTransitioning={isTransitioning}
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden"
+              >
+                {isMenuOpen ? <X className="h-[1.2rem] w-[1.2rem]" /> : <Menu className="h-[1.2rem] w-[1.2rem]" />}
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
