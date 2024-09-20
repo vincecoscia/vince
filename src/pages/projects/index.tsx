@@ -47,7 +47,7 @@ const ProjectsPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>vincecoscia - projects</title>
+        <title>vincecoscia | projects</title>
         <meta name="description" content="Portfolio" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
