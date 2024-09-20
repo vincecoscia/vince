@@ -39,7 +39,7 @@ export default function Navbar() {
 
     setTimeout(() => {
       setIsTransitioning(false)
-    }, 2000) // End transition after fade-out
+    }, 1000) // End transition after fade-out
   }
 
   const navItems = [
